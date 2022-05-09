@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+prev_j = 0
+acc = 0
+x = 0
+old_x = 0
+y = 0
+p <- ggplot()
+deltas <- c()
+
+for (i in seq(0, 10, 0.01)){
+  if (i**2 > 10) { 
+    break
+  }
+  x_old <- x
+  y <- y + ((i**2)**2 * (0.01 * 2 * i))
+  x <- (0.01 * 2 * i)
+  prev_j = i**2
+  deltas <- c(deltas, x-x_old)
+  p <- p + geom_rect(data=data.frame(xmin=x_old, xmax=x, ymin=0, ymax=y), aes(xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax), fill="red", alpha=0.2) 
+}
+p
+ 
+```
+
+
+```{r}
+prev_j = 0
+acc = 0
+x = 0
+old_x = 0
+y = 0
+p <- ggplot()
+deltas <- c()
+delta <- 0.05
+e <- exp(1)
+up_limit <- 10
+
+f <- function(x) {
+  e**x
+}
+
+df <- function(x) {
+ e**x 
+}
+
+for (i in seq(0, up_limit, delta)){
+  if (f(i) > up_limit) { 
+    break
+  }
+  x_old <- x
+  y <- y + ((f(i))**2 * (delta * df(i)))
+  x <- (delta * df(i))
+  deltas <- c(deltas, x-x_old)
+  p <- p + geom_rect(data=data.frame(xmin=x_old, xmax=x, ymin=0, ymax=y), aes(xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax), fill="red", alpha=0.2) 
+}
+p
+
+# 333 
+```
